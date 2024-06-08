@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -76,6 +77,34 @@ func main() {
 				}
 			}
 
+			continue
+		}
+
+		// Execute programs
+		args := strings.Fields(command)
+		program := args[0]
+		found := false
+		pathEnv := os.Getenv("PATH")
+		paths := strings.Split(pathEnv, ":")
+
+		for _, path := range paths {
+			executablePath := filepath.Join(path, program)
+
+			if _, err := os.Stat(executablePath); err == nil {
+				cmd := exec.Command(executablePath, args[1:]...)
+				cmd.Stdout = os.Stdout
+				cmd.Stderr = os.Stderr
+
+				if err := cmd.Run(); err != nil {
+					fmt.Printf("Error running command: %v\n", err)
+				}
+
+				found = true
+				break
+			}
+		}
+
+		if !found {
 			continue
 		}
 
