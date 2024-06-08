@@ -10,8 +10,6 @@ import (
 
 func main() {
 	for {
-		fmt.Fprint(os.Stdout, "$ ")
-
 		// Wait for user input
 		reader := bufio.NewReader(os.Stdin)
 		input, err := reader.ReadString('\n')
