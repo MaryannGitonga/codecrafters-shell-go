@@ -16,6 +16,7 @@ func main() {
 		"echo": true,
 		"exit": true,
 		"type": true,
+		"pwd":  true,
 	}
 
 	for {
@@ -47,6 +48,18 @@ func main() {
 		if strings.HasPrefix(command, "echo") {
 			arg := strings.TrimSpace(strings.TrimPrefix(command, "echo"))
 			fmt.Println(arg)
+			continue
+		}
+
+		if strings.HasPrefix(command, "pwd") {
+			dir, err := os.Getwd()
+
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Error getting current directory:", err)
+			} else {
+				fmt.Println(dir)
+			}
+
 			continue
 		}
 
