@@ -17,6 +17,7 @@ func main() {
 		"exit": true,
 		"type": true,
 		"pwd":  true,
+		"cd":   true,
 	}
 
 	for {
@@ -58,6 +59,22 @@ func main() {
 				fmt.Fprintln(os.Stderr, "Error getting current directory:", err)
 			} else {
 				fmt.Println(dir)
+			}
+
+			continue
+		}
+
+		if strings.HasPrefix(command, "cd") {
+			args := strings.Fields(command)
+
+			if len(args) != 2 {
+				fmt.Println("Invalid cd command usage. Use: cd <directory>")
+				continue
+			}
+
+			path := args[1]
+			if err := os.Chdir(path); err != nil {
+				fmt.Printf("cd: %s: No such file or directory\n", path)
 			}
 
 			continue
