@@ -34,6 +34,10 @@ func main() {
 			fmt.Println("Invalid exit command usage. Use: exit <code>")
 		}
 
+		if strings.HasPrefix(command, "echo") {
+			fmt.Println(strings.TrimPrefix(command, "echo"))
+		}
+
 		fmt.Printf("%s: command not found\n", command)
 	}
 }
