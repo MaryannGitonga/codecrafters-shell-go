@@ -54,8 +54,6 @@ func main() {
 			if len(args) == 2 {
 				if builtins[args[1]] {
 					fmt.Printf("%s is a shell builtin\n", args[1])
-				} else {
-					fmt.Printf("Invalid type command usage. Use type <command>")
 				}
 			}
 
