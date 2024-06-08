@@ -36,7 +36,8 @@ func main() {
 		}
 
 		if strings.HasPrefix(command, "echo") {
-			fmt.Println(strings.TrimPrefix(command, "echo"))
+			arg := strings.TrimSpace(strings.TrimPrefix(command, "echo"))
+			fmt.Print(arg)
 			continue
 		}
 
