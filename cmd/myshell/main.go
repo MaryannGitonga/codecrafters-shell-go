@@ -55,6 +55,8 @@ func main() {
 				if builtins[args[1]] {
 					fmt.Printf("%s is a shell builtin\n", args[1])
 				}
+			} else {
+				fmt.Printf("%s: not found\n", args[1])
 			}
 
 			continue
