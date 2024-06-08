@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"os/user"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -76,14 +75,7 @@ func main() {
 			path := args[1]
 
 			if path == "~" {
-				usr, err := user.Current()
-
-				if err != nil {
-					fmt.Fprintln(os.Stderr, "Error getting current user:", err)
-					continue
-				}
-
-				path = usr.HomeDir
+				path = os.Getenv("HOME")
 			}
 
 			if err := os.Chdir(path); err != nil {
