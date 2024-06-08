@@ -104,7 +104,7 @@ func main() {
 			}
 		}
 
-		if !found {
+		if found {
 			continue
 		}
 
