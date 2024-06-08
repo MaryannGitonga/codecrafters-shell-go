@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"os/user"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -73,6 +74,18 @@ func main() {
 			}
 
 			path := args[1]
+
+			if path == "~" {
+				usr, err := user.Current()
+
+				if err != nil {
+					fmt.Fprintln(os.Stderr, "Error getting current user:", err)
+					continue
+				}
+
+				path = usr.HomeDir
+			}
+
 			if err := os.Chdir(path); err != nil {
 				fmt.Printf("cd: %s: No such file or directory\n", path)
 			}
