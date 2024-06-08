@@ -9,6 +9,13 @@ import (
 )
 
 func main() {
+
+	builtins := map[string]bool{
+		"echo": true,
+		"exit": true,
+		"type": true,
+	}
+
 	for {
 		fmt.Fprint(os.Stdout, "$ ")
 
@@ -38,6 +45,20 @@ func main() {
 		if strings.HasPrefix(command, "echo") {
 			arg := strings.TrimSpace(strings.TrimPrefix(command, "echo"))
 			fmt.Println(arg)
+			continue
+		}
+
+		if strings.HasPrefix(command, "type") {
+			args := strings.Fields(command)
+
+			if len(args) == 2 {
+				if builtins[args[1]] {
+					fmt.Printf("%s is a shell builtin\n", args[1])
+				} else {
+					fmt.Printf("Invalid type command usage. Use type <command>")
+				}
+			}
+
 			continue
 		}
 
