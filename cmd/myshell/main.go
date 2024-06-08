@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -55,7 +56,23 @@ func main() {
 				if builtins[args[1]] {
 					fmt.Printf("%s is a shell builtin\n", args[1])
 				} else {
-					fmt.Printf("%s: not found\n", args[1])
+					found := false
+					pathEnv := os.Getenv("PATH")
+					paths := strings.Split(pathEnv, ":")
+
+					for _, path := range paths {
+						executablePath := filepath.Join(path, args[1])
+
+						if _, err := os.Stat(executablePath); err == nil {
+							fmt.Printf("%s is %s\n", args[1], executablePath)
+							found = true
+							break
+						}
+					}
+
+					if !found {
+						fmt.Printf("%s: not found\n", args[1])
+					}
 				}
 			}
 
